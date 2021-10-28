@@ -32,7 +32,7 @@ func Login(c *gin.Context) {
 		return
 	}
 	// ค้นหา studentCouncils ด้วย รหัสนักศึกษา ที่ผู้ใช้กรอกเข้ามา
-	if err := entity.DB().Raw("SELECT * FROM student_councils WHERE student_id = ?", payload.StudentId).Scan(&studentCouncils).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM student_councils WHERE ID_Student = ?", payload.StudentId).Scan(&studentCouncils).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -55,7 +55,7 @@ func Login(c *gin.Context) {
 		ExpirationHours: 24,
 	}
 
-	signedToken, err := jwtWrapper.GenerateToken(studentCouncils.Student_id)
+	signedToken, err := jwtWrapper.GenerateToken(studentCouncils.ID_Student)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "error signing token"})
 		return
@@ -64,7 +64,7 @@ func Login(c *gin.Context) {
 	tokenResponse := LoginResponse{
 		Token: signedToken,
 		ID:    studentCouncils.ID,
-		Stdid: studentCouncils.Student_id,
+		Stdid: studentCouncils.ID_Student,
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": tokenResponse})

@@ -25,8 +25,8 @@ func CreateStudentCouncil(c *gin.Context) {
 // GET /studentCouncil/:student_id
 func GetStudentCouncilWithStudentID(c *gin.Context) {
 	var studentCouncil entity.StudentCouncil
-	student_id := c.Param("student_id")
-	if err := entity.DB().Raw("SELECT * FROM student_councils WHERE student_id = ?", student_id).Scan(&studentCouncil).Error; err != nil {
+	student_id := c.Param("ID_Student")
+	if err := entity.DB().Raw("SELECT * FROM student_councils WHERE ID_Student = ?", student_id).Scan(&studentCouncil).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
