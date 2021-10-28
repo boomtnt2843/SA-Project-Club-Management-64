@@ -211,7 +211,7 @@ export default function AddData(){
             {/* {studentCouncils.map((item: StudentCouncilInterface) => (*/}
                 <Box p={3}>
                     <Typography variant="h6">
-                        กรรมการสภานักศึกษา: {studentCouncils?.Student_id} {studentCouncils?.Name}
+                        กรรมการสภานักศึกษา: {studentCouncils?.ID_Student} {studentCouncils?.Name}
                     </Typography>
                 </Box>
             {/*))} */}

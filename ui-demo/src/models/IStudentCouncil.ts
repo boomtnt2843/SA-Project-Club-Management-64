@@ -1,6 +1,6 @@
 export interface StudentCouncilInterface {
     ID: number,
     Name: string,
-    Student_id: string,
+    ID_Student: string,
     Password: string,
 }
