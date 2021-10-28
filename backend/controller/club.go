@@ -1,6 +1,6 @@
 package controller
 
-import(
+import (
 	"net/http"
 
 	"github.com/boomertnt210943/my-app/entity"
@@ -40,10 +40,10 @@ func CreateClub(c *gin.Context) {
 
 	//12 create
 	newClub := entity.Club{
-		Adder: 		adder,
-		Adviser: 	adviser,
-		TypeClub: 	typeClub,
-		Name: 		club.Name,
+		Adder:    adder,
+		Adviser:  adviser,
+		TypeClub: typeClub,
+		Name:     club.Name,
 	}
 
 	//13 save
@@ -53,7 +53,6 @@ func CreateClub(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": newClub})
 }
-
 
 // GET /club/:id
 func GetClub(c *gin.Context) {
@@ -104,4 +103,18 @@ func UpdataClub(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": club})
+}
+
+
+// GET /clubs/student_id/:id --By Ohm--
+func ListClubByStudentID(c *gin.Context) {
+	var clubs []entity.Club
+	id := c.Param("id")
+	if err := entity.DB().Raw("SELECT * FROM clubs WHERE id NOT IN (SELECT club_id FROM club_memberships WHERE student_id = ?)", id).Find(&clubs).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"errorishere": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": clubs})
+
 }

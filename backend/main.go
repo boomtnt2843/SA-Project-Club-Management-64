@@ -50,7 +50,7 @@ func main() {
 	r.POST("/studentCouncils", controller.CreateStudentCouncil)
 
 	// Authentication Routes
-	r.POST("/login", controller.Login)
+	r.POST("/login", controller.LoginByStudentCouncil)
 
 	//run the server
 	r.Run()
