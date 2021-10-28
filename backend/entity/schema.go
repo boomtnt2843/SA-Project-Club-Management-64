@@ -7,7 +7,7 @@ import (
 type StudentCouncil struct {
 	gorm.Model
 	Name       string
-	Student_id string `gorm:"uniqueIndex"`
+	ID_Student string `gorm:"uniqueIndex"`
 	Password   string
 	Clubs      []Club `gorm:"foreignKey:AdderID"`
 }

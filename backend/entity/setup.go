@@ -32,19 +32,19 @@ func SetupDatabase() {
 	//student council
 	db.Model(&StudentCouncil{}).Create(&StudentCouncil{
 		Name: "นารา สิงห์ใจ",
-		Student_id: "B6223412",
+		ID_Student: "B6223412",
 		Password: string(password),
 	})
 
 	db.Model(&StudentCouncil{}).Create(&StudentCouncil{
 		Name: "มีนา น่าอยู่",
-		Student_id: "B6178531",
+		ID_Student: "B6178531",
 		Password: string(password),
 	})
 
 	db.Model(&StudentCouncil{}).Create(&StudentCouncil{
 		Name: "ปศิมา สาครศิลป์",
-		Student_id: "B6289123",
+		ID_Student: "B6289123",
 		Password: string(password),
 	})
 
