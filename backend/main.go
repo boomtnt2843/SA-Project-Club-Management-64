@@ -20,7 +20,7 @@ func main() {
 			//Student Council Router
 			protected.GET("/studentCouncils", controller.ListStudentCouncils)
 			protected.GET("/studentCouncil/:id", controller.GetStudentCouncil)
-			protected.GET("/studentCouncil/find_with_studentID/:student_id", controller.GetStudentCouncilWithStudentID)
+			protected.GET("/studentCouncil/find_with_studentID/:ID_Student", controller.GetStudentCouncilWithStudentID)
 			protected.PATCH("/studentCouncils", controller.UpdataStudentCouncil)
 			protected.DELETE("/studentCouncils/:id", controller.DeleteStudentCouncil)
 
