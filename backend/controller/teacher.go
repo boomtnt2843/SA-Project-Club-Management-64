@@ -54,7 +54,7 @@ func DeleteTeacher(c *gin.Context) {
 }
 
 // PATCH /teachers
-func UpdataTeacher(c *gin.Context) {
+func UpdateTeacher(c *gin.Context) {
 	var teacher entity.Teacher
 	if err := c.ShouldBindJSON(&teacher); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

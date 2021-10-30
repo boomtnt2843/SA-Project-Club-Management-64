@@ -65,7 +65,7 @@ func DeleteStudentCouncil(c *gin.Context) {
 }
 
 // PATCH /studentCouncils
-func UpdataStudentCouncil(c *gin.Context) {
+func UpdateStudentCouncil(c *gin.Context) {
 	var studentCouncil entity.StudentCouncil
 	if err := c.ShouldBindJSON(&studentCouncil); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

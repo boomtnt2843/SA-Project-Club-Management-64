@@ -14,31 +14,31 @@ func CreateClub(c *gin.Context) {
 	var adder entity.StudentCouncil
 	var typeClub entity.TypeClub
 
-	//8
+	//7
 	if err := c.ShouldBindJSON(&club); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	//9 type club
+	//8 type club
 	if tx := entity.DB().Where("id = ?", club.TypeClubID).First(&typeClub); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "type club not found"})
 		return
 	}
 
-	//10 teacher
+	//9 teacher
 	if tx := entity.DB().Where("id = ?", club.AdviserID).First(&adviser); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "adviser not found"})
 		return
 	}
 
-	//11 Student Council
+	//10 Student Council
 	if tx := entity.DB().Where("id = ?", club.AdderID).First(&adder); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "student council not found"})
 		return
 	}
 
-	//12 create
+	//11 create
 	newClub := entity.Club{
 		Adder:    adder,
 		Adviser:  adviser,
@@ -46,7 +46,7 @@ func CreateClub(c *gin.Context) {
 		Name:     club.Name,
 	}
 
-	//13 save
+	//12 save
 	if err := entity.DB().Create(&newClub).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -58,7 +58,7 @@ func CreateClub(c *gin.Context) {
 func GetClub(c *gin.Context) {
 	var club entity.Club
 	id := c.Param("id")
-	if err := entity.DB().Preload("StudentCouncil").Preload("Teacher").Preload("TypeClub").Raw("SELECT * FROM clubs WHERE id = ?", id).Find(&club).Error; err != nil {
+	if err := entity.DB().Preload("Adder").Preload("Adviser").Preload("TypeClub").Raw("SELECT * FROM clubs WHERE id = ?", id).Find(&club).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -75,7 +75,7 @@ func ListClubs(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": clubs})
 }
 
-// DELETE /teachers/:id
+// DELETE /club/:id
 func DeleteClub(c *gin.Context) {
 	id := c.Param("id")
 	if tx := entity.DB().Exec("DELETE FROM clubs WHERE id = ?", id); tx.RowsAffected == 0 {
@@ -85,8 +85,8 @@ func DeleteClub(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": id})
 }
 
-// PATCH /teachers
-func UpdataClub(c *gin.Context) {
+// PATCH /clubs
+func UpdateClub(c *gin.Context) {
 	var club entity.Club
 	if err := c.ShouldBindJSON(&club); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

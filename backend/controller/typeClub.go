@@ -54,7 +54,7 @@ func DeleteTypeClub(c *gin.Context) {
 }
 
 // PATCH /typeClubs
-func UpdataTypeClub(c *gin.Context) {
+func UpdateTypeClub(c *gin.Context) {
 	var typeClub entity.TypeClub
 	if err := c.ShouldBindJSON(&typeClub); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

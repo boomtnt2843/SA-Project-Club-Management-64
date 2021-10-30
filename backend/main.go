@@ -21,28 +21,28 @@ func main() {
 			protected.GET("/studentCouncils", controller.ListStudentCouncils)
 			protected.GET("/studentCouncil/:id", controller.GetStudentCouncil)
 			protected.GET("/studentCouncil/find_with_studentID/:ID_Student", controller.GetStudentCouncilWithStudentID)
-			protected.PATCH("/studentCouncils", controller.UpdataStudentCouncil)
+			protected.PATCH("/studentCouncils", controller.UpdateStudentCouncil)
 			protected.DELETE("/studentCouncils/:id", controller.DeleteStudentCouncil)
 
 			//type Club Router
 			protected.GET("/typeClubs", controller.ListTypeClubs)
 			protected.GET("/typeClub/:id", controller.GetTypeClub)
 			protected.POST("/typeClubs", controller.CreateTypeClub)
-			protected.PATCH("/typeClubs", controller.UpdataTypeClub)
+			protected.PATCH("/typeClubs", controller.UpdateTypeClub)
 			protected.DELETE("/typeClubs/:id", controller.DeleteTypeClub)
 
 			//teacher Router
 			protected.GET("/teachers", controller.ListTeachers)
 			protected.GET("/teacher/:id", controller.GetTeacher)
 			protected.POST("/teachers", controller.CreateTeacher)
-			protected.PATCH("/teachers", controller.UpdataTeacher)
+			protected.PATCH("/teachers", controller.UpdateTeacher)
 			protected.DELETE("teachers/:id", controller.DeleteTeacher)
 
 			//club Router
 			protected.GET("/clubs", controller.ListClubs)
 			protected.GET("/club/:id", controller.GetClub)
 			protected.POST("/clubs", controller.CreateClub)
-			protected.PATCH("/clubs", controller.UpdataClub)
+			protected.PATCH("/clubs", controller.UpdateClub)
 			protected.DELETE("/clubs/:id", controller.DeleteClub)
 		}
 	}
