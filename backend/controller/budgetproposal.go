@@ -46,7 +46,7 @@ func CreateBudgetProposal(c *gin.Context) {
 		Activity:			activity,               
 		BudgetType:    		budgettype,               
 		BudgetCategory: 	budgetcategory, 
-		Price:				budgetproposal.Price,
+		BudgetPrice:    	budgetproposal.BudgetPrice,
 	}
 
 	// 13: บันทึก

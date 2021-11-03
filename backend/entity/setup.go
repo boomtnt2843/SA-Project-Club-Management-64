@@ -222,7 +222,20 @@ func SetupDatabase() {
 		Club:   c4,
 	}
 	db.Model(&Activity{}).Create(&studentFormula)
-
+	Astronomycamp := Activity{
+		Name:   "Astronomy camp#1",
+		Amount: 150,
+		Club:   c1,
+		Time:   time.Date(2019, 11, 19, 17, 30, 00, 000, time.UTC),
+	}
+	db.Model(&Activity{}).Create(&Astronomycamp)
+	AstronomyDay := Activity{
+		Name:   "Astronomy Day#1",
+		Amount: 150,
+		Club:   c1,
+		Time:   time.Date(2020, 10, 19, 17, 30, 00, 000, time.UTC),
+	}
+	db.Model(&Activity{}).Create(&AstronomyDay)
 	formulaRacing := Activity{
 		Name:   "Formula Racing 2021",
 		Time:   time.Now(),
@@ -488,14 +501,14 @@ func SetupDatabase() {
 		Activity:   ps,
 		BudgetType: money1,
 		BudgetCategory:  cate4,
-		Price: 50000,
+		BudgetPrice: 50000,
 	})
 	//Budgetps2
 	db.Model(&BudgetProposal{}).Create(&BudgetProposal{
 		Activity:   studentFormula,
 		BudgetType: money2,
 		BudgetCategory:  cate2,
-		Price: 1000,
+		BudgetPrice: 1000,
 	})
 
 	//จบแบงค์ep2

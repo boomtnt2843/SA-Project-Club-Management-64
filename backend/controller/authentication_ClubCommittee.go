@@ -51,6 +51,7 @@ func LoginByClubCommittee(c *gin.Context) {
 	tokenResponse := LoginResponse{
 		Token: signedToken,
 		ID:    clubcommittee.ID,
+		Stdid: clubcommittee.ID_Student,
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": tokenResponse})

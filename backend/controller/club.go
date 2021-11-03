@@ -14,7 +14,7 @@ func CreateClub(c *gin.Context) {
 	var adder entity.StudentCouncil
 	var typeClub entity.TypeClub
 
-	//7
+	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 7 จะถูก bind เข้าตัวแปร Club
 	if err := c.ShouldBindJSON(&club); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -110,6 +110,8 @@ func UpdateClub(c *gin.Context) {
 func ListClubByStudentID(c *gin.Context) {
 	var clubs []entity.Club
 	id := c.Param("id")
+
+	// ค้นหา club ทั้งหมดที่นักษาที่กำลังใช้งานระบบไม่ได้เป็นสมาชิกอยู่ 
 	if err := entity.DB().Raw("SELECT * FROM clubs WHERE id NOT IN (SELECT club_id FROM club_memberships WHERE student_id = ?)", id).Find(&clubs).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"errorishere": err.Error()})
 		return
@@ -117,4 +119,23 @@ func ListClubByStudentID(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": clubs})
 
+}
+
+// GET /clubname/clubcommittee/:id <- Parameter --by bank
+func GetClubwithClubCommittee(c *gin.Context) {
+	var clubcommittee entity.ClubCommittee
+	var club entity.Club
+	id := c.Param("id")
+
+	if tx := entity.DB().Raw("SELECT * FROM club_committees WHERE id = ?", id).Find(&clubcommittee); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "clubcommittees not found"})
+		//  find club_committees from id
+		return
+	}
+	if err := entity.DB().Raw("SELECT * FROM clubs WHERE id = ?", clubcommittee.ClubID).Find(&club).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		//  ค้นหาข้างบนเจอ ใช้ clubcommittee.ClubID ค้นหา club
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": club})
 }

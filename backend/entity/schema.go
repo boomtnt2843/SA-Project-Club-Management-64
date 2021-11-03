@@ -2,6 +2,7 @@ package entity
 
 import (
 	"time"
+
 	"gorm.io/gorm"
 )
 
@@ -47,49 +48,49 @@ type Club struct {
 	Editors []ClubCommittee `gorm:"foreignKey:ClubID"`
 
 	// 1 Club สมารถมี ClubMembers ได้หลายคน
-	ClubMembership  []ClubMembership  `gorm:"foreignKey: ClubID"`
+	ClubMembership []ClubMembership `gorm:"foreignKey: ClubID"`
 }
 
 /*อันนี้ของเลดี้นะครับ*/
 
 type Activity struct {
 	gorm.Model
-	Name string
-	Time time.Time
-	Amount uint 
-	
+	Name   string
+	Time   time.Time
+	Amount uint
+
 	// 1 activities can be in many JoinActivity
 	JoinActivityHistories []JoinActivityHistory `gorm:"foreignKey:ActivityID"`
-	
-	BudgetProposals		[]BudgetProposal `gorm:"foreignkey:ActivityID"`
-	
+
+	BudgetProposals []BudgetProposal `gorm:"foreignkey:ActivityID"`
+
 	Joinings []Joining `gorm:"foreignKey:ActivityID"`
-	
+
 	ReserveLocations []ReserveLocation `gorm:"foreignKey:ActivityID"`
-	
-	ClubID 		*uint
-	Club 		Club
+
+	ClubID *uint
+	Club   Club
 }
 
 type Student struct {
 	gorm.Model
-	Name      string
+	Name       string
 	ID_Student string `gorm:"uniqueIndex"`
-	Password string
+	Password   string
 	// 1 user can be in many JoinActivity
 	JoinActivityHistories []JoinActivityHistory `gorm:"foreignKey:StudentID"`
-	
+
 	Joinings []Joining `gorm:"foreignKey:StudentID"`
 
 	// 1 User สมารถเป็น Clubmembers ได้หลายชมรม
-	ClubMembership  []ClubMembership `gorm:"foreignKey:StudentID"`
+	ClubMembership []ClubMembership `gorm:"foreignKey:StudentID"`
 }
 
 type ClubCommittee struct {
 	gorm.Model
-	Name      string
+	Name       string
 	ID_Student string `gorm:"uniqueIndex"`
-	Password string
+	Password   string
 
 	ClubID *uint
 	Club   Club
@@ -98,7 +99,6 @@ type ClubCommittee struct {
 	JoinActivityHistories []JoinActivityHistory `gorm:"foreignKey:EditorID"`
 
 	ReserveLocations []ReserveLocation `gorm:"foreignKey:RequestID"`
-	
 }
 
 type JoinActivityHistory struct {
@@ -107,49 +107,47 @@ type JoinActivityHistory struct {
 	Point     uint
 	Timestamp time.Time
 
-	ActivityID      *uint
-	Activity        Activity 		`gorm:"references:ID"`
+	ActivityID *uint
+	Activity   Activity `gorm:"references:ID"`
 
-	StudentID       *uint
-	Student         Student 		`gorm:"references:ID"`
-	
-	EditorID 		*uint
-	Editor   ClubCommittee 			`gorm:"references:ID"`
+	StudentID *uint
+	Student   Student `gorm:"references:ID"`
+
+	EditorID *uint
+	Editor   ClubCommittee `gorm:"references:ID"`
 }
 
 /*จบของเลดี้เพียงเท่านี้*/
 // แบงค์เอง ,ใช่เหย๋อ
 
-type BudgetCategory	struct {
+type BudgetCategory struct {
 	gorm.Model
-	Name				string
-	BudgetProposals		[]BudgetProposal `gorm:"foreignKey:BudgetCategoryID"`
+	Name            string
+	BudgetProposals []BudgetProposal `gorm:"foreignKey:BudgetCategoryID"`
 }
-type BudgetType	struct {
+type BudgetType struct {
 	gorm.Model
-	Name				string
-	BudgetProposals		[]BudgetProposal `gorm:"foreignKey:BudgetTypeID"`
+	Name            string
+	BudgetProposals []BudgetProposal `gorm:"foreignKey:BudgetTypeID"`
 }
-
 
 type BudgetProposal struct {
 	gorm.Model
-	Price         	int
-	
-	
+	BudgetPrice int
+
 	// ActivityID ทำหน้าที่เป็น FK
-	ActivityID			*uint
-	Activity			Activity
+	ActivityID *uint
+	Activity   Activity
 
 	// CategoryID ทำหน้าที่เป็น FK
-	BudgetCategoryID	*uint
-	BudgetCategory		BudgetCategory
-	
-	// TypeBudgetId ทำหน้าที่เป็น Fk
-	BudgetTypeID		*uint
-	BudgetType			BudgetType
+	BudgetCategoryID *uint
+	BudgetCategory   BudgetCategory
 
+	// TypeBudgetId ทำหน้าที่เป็น Fk
+	BudgetTypeID *uint
+	BudgetType   BudgetType
 }
+
 // จบแบงค์
 
 //อ๊อฟ
@@ -176,7 +174,6 @@ type Joining struct {
 	JoinstatusID *uint
 	Joinstatus   Joinstatus
 }
-
 
 //ของนุ
 
@@ -209,44 +206,44 @@ type ReserveLocation struct {
 	ReserveStatusID *uint
 	ReserveStatus   ReserveStatus `gorm:"references:id"`
 }
+
 //จบของนุ
 
 // ของโอม
 
-  
-  type Authority struct {
+type Authority struct {
 	gorm.Model
-	Name            string
-	// 1 Authority สมารถมีอยู่ใน ClubMembers ได้หลายคน
-	ClubMembership  []ClubMembership  `gorm:"foreignKey: AuthorityID"`
-  }
-  
-  type MembershipStatus struct {
-	gorm.Model
-	Name            string
-	// 1 RequestStatus สมารถมีอยู่ใน ClubMembers ได้หลายคน
-	ClubMembership  []ClubMembership  `gorm:"foreignKey: MembershipStatusID"`
-  }
-  
-  type ClubMembership struct {
-	gorm.Model
-	RegisterDate        time.Time
-  
-	// UserID ทำหน้าที่เป็น FK
-	StudentID           *uint
-	Student             Student
-	
-	// AuthorityID ทำหน้าที่เป็น FK
-	AuthorityID         *uint
-	Authority           Authority
-  
-	// ClubID ทำหน้าที่เป็น FK
-	ClubID              *uint
-	Club                Club
-  
-	// RequestStatusID ทำหน้าที่เป็น FK
-	MembershipStatusID  *uint
-	MembershipStatus    MembershipStatus
-  }
-// จบของโอม
+	Name string
+	// 1 Authority สมารถมีอยู่ใน ClubMembership ได้หลายความสัมพันธ์
+	ClubMembership []ClubMembership `gorm:"foreignKey: AuthorityID"`
+}
 
+type MembershipStatus struct {
+	gorm.Model
+	Name string
+	// 1 MembershipStatus สามารถมีอยู่ใน ClubMembership ได้หลายความสัมพันธ์
+	ClubMembership []ClubMembership `gorm:"foreignKey: MembershipStatusID"`
+}
+
+type ClubMembership struct {
+	gorm.Model
+	RegisterDate time.Time
+
+	// UserID ทำหน้าที่เป็น FK
+	StudentID *uint
+	Student   Student
+
+	// AuthorityID ทำหน้าที่เป็น FK
+	AuthorityID *uint
+	Authority   Authority
+
+	// ClubID ทำหน้าที่เป็น FK
+	ClubID *uint
+	Club   Club
+
+	// RequestStatusID ทำหน้าที่เป็น FK
+	MembershipStatusID *uint
+	MembershipStatus   MembershipStatus
+}
+
+// จบของโอม

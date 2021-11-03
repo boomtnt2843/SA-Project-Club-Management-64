@@ -15,6 +15,7 @@ func CreateClubMembership(c *gin.Context) {
 	var club entity.Club
 	var clubMembership entity.ClubMembership
 
+	// 8:บันทึกข้อมูลเข้าชมรม() ไม่ได้เรียกใช้ตรงๆ แต่เป็นการบันทึกใส่ตัวแปรเพื่อที่ได้นำไปบันทึกใน DB ต่อไป
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 8 จะถูก bind เข้าตัวแปร clubMmebership
 	if err := c.ShouldBindJSON(&clubMembership); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -67,6 +68,8 @@ func CreateClubMembership(c *gin.Context) {
 func GetClubMembership(c *gin.Context) {
 	var clubMembership entity.ClubMembership
 	id := c.Param("id")
+
+	// preload เป็นการดึงข้อมูลมาจาก FK ของตารางที่ใช้ในคำสั่ง Raw
 	if err := entity.DB().Preload("MembershipStatus").Preload("Authority").Preload("Club").Preload("Student").Raw("SELECT * FROM club_memberships WHERE id = ?", id).Find(&clubMembership).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"errorishere": err.Error()})
 		return
