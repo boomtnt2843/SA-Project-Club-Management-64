@@ -133,7 +133,7 @@ type BudgetType struct {
 
 type BudgetProposal struct {
 	gorm.Model
-	BudgetPrice int
+	BudgetPrice uint
 
 	// ActivityID ทำหน้าที่เป็น FK
 	ActivityID *uint

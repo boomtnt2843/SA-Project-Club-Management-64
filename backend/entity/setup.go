@@ -465,21 +465,21 @@ func SetupDatabase() {
 
 	// budgetcategory Data
 	cate1 := BudgetCategory{
-		Name: "Nutrition",
+		Name: "โภชนาการ",
 	}
 	db.Model(&BudgetCategory{}).Create(&cate1)
 
 	cate2 := BudgetCategory{
-		Name: "Equipment",
+		Name: "เครื่องมืออุปกรณ์",
 	}
 	db.Model(&BudgetCategory{}).Create(&cate2)
 	cate3 := BudgetCategory{
-		Name: "Pocket Money",
+		Name: "เบ็ดเตล็ด",
 	}
 	db.Model(&BudgetCategory{}).Create(&cate3)
 
 	cate4 := BudgetCategory{
-		Name: "Journey",
+		Name: "การเดินทาง",
 	}
 	db.Model(&BudgetCategory{}).Create(&cate4)
 
