@@ -338,25 +338,21 @@ func SetupDatabase() {
 	// ของโอม
 
 	// Authority Data
+	// สิทธิ์ในชมรมที่ไม่ได้เป็นกรรมการบริหารชมรม
 	clubMember := Authority{
 		Name: "club member",
 	}
 	db.Model(&Authority{}).Create(&clubMember)
 
-	accounting := Authority{
-		Name: "accounting",
+	clubSecretary := Authority{
+		Name: "club secretary",
 	}
-	db.Model(&Authority{}).Create(&accounting)
+	db.Model(&Authority{}).Create(&clubSecretary)
 
-	placeManager := Authority{
-		Name: "place manager",
+	clubVicePresident := Authority{
+		Name: "club vice president",
 	}
-	db.Model(&Authority{}).Create(&placeManager)
-
-	memberManager := Authority{
-		Name: "member manager",
-	}
-	db.Model(&Authority{}).Create(&memberManager)
+	db.Model(&Authority{}).Create(&clubVicePresident)
 
 	clubPresident := Authority{
 		Name: "club president",
@@ -364,26 +360,35 @@ func SetupDatabase() {
 	db.Model(&Authority{}).Create(&clubPresident)
 
 	// Membership Status Data
+	// รอการอนุมัติเข้าชมรม
 	pendingApproval := MembershipStatus{
 		Name: "pending approval",
 	}
 	db.Model(&MembershipStatus{}).Create(&pendingApproval)
 
-	approved := MembershipStatus{
-		Name: "approved",
+	// สามารถดำเนินกิจกรรมทางชมรมได้
+	active := MembershipStatus{
+		Name: "active",
 	}
-	db.Model(&MembershipStatus{}).Create(&approved)
+	db.Model(&MembershipStatus{}).Create(&active)
 
+	// ถูกปฏิเสธการเข้าร่วมชมรม
 	reject := MembershipStatus{
 		Name: "reject",
 	}
 	db.Model(&MembershipStatus{}).Create(&reject)
 
+	// ไม่สามารถดำเนินกิจกรรมทางชมรมได้
+	inactive := MembershipStatus{
+		Name: "inactive",
+	}
+	db.Model(&MembershipStatus{}).Create(&inactive)
+
 	// Club Membership Data
 	db.Model(&ClubMembership{}).Create(&ClubMembership{
 		Student:          malisa,
 		Authority:        clubMember,
-		MembershipStatus: approved,
+		MembershipStatus: active,
 		Club:             c3,
 		RegisterDate:     time.Now(),
 	})
@@ -391,7 +396,7 @@ func SetupDatabase() {
 	db.Model(&ClubMembership{}).Create(&ClubMembership{
 		Student:          gaga,
 		Authority:        clubPresident,
-		MembershipStatus: approved,
+		MembershipStatus: active,
 		Club:             c4,
 		RegisterDate:     time.Now(),
 	})
@@ -436,28 +441,35 @@ func SetupDatabase() {
 		Name: "สระสามแสน",
 	}
 	db.Model(&Location{}).Create(&Samsan)
-	pendingOne := ReserveStatus{
+	Status1 := ReserveStatus{
 		Label: "คำร้องรอการอนุมัติ",
 	}
 
-	db.Model(&ReserveStatus{}).Create(&pendingOne)
-	pending2 := ReserveStatus{
+	db.Model(&ReserveStatus{}).Create(&Status1)
+	Status2 := ReserveStatus{
 		Label: "คำร้องได้รับการอนุมัติ",
 	}
-	db.Model(&ReserveStatus{}).Create(&pending2)
-	pending3 := ReserveStatus{
+	db.Model(&ReserveStatus{}).Create(&Status2)
+	Status3 := ReserveStatus{
 		Label: "คำร้องไม่ได้รับการอนุมัติ",
 	}
-	db.Model(&ReserveStatus{}).Create(&pending3)
+	db.Model(&ReserveStatus{}).Create(&Status3)
 	db.Model(&ReserveLocation{}).Create(&ReserveLocation{
-		DateStart:     time.Now(),
-		DateEnd:       time.Now(),
+		DateStart:      time.Date(2021, 11, 18, 17, 30, 00, 000, time.UTC),
+		DateEnd:        time.Date(2021, 11, 19, 17, 30, 00, 000, time.UTC),
 		Location:      lanmolum,
 		Activity:      Astronomynight1,
 		Request:       phanuwat,
-		ReserveStatus: pending2,
+		ReserveStatus: Status2,
 	})
-	
+	db.Model(&ReserveLocation{}).Create(&ReserveLocation{
+		DateStart:      time.Date(2020, 10, 18, 17, 30, 00, 000, time.UTC),
+		DateEnd:        time.Date(2020, 10, 19, 17, 30, 00, 000, time.UTC),
+		Location:      lanmolum,
+		Activity:      AstronomyDay,
+		Request:       phanuwat,
+		ReserveStatus: Status3,
+	})
 	//
 
 
